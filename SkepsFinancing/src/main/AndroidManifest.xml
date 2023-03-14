@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.bluetooth" android:required="true" />
+
+<application>
+    <activity
+        android:name=".SkepsFinancing"
+        android:exported="true">
+        <meta-data
+            android:name="android.app.skeps_financing"
+            android:value="" />
+    </activity>
+    <activity
+        android:name=".SkepsInit"
+        android:exported="true">
+        <meta-data
+            android:name="android.app.skeps_init"
+            android:value="" />
+    </activity>
+</application>
+
+</manifest>
