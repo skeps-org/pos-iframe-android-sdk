@@ -44,6 +44,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         SkepsInit SKEPSInitFlow = new SkepsInit(view.getContext());
-//        SKEPSInitFlow.initProcess(config, handlers);
+        SKEPSInitFlow.initProcess(config, handlers);
     }
 }
