@@ -20,6 +20,9 @@
             android:name="android.app.skeps_init"
             android:value="" />
     </activity>
+    <uses-library
+        android:name="org.apache.http.legacy"
+        android:required="false" />
 </application>
 
 </manifest>

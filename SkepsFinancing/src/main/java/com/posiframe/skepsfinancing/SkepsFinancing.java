@@ -54,8 +54,8 @@ public class SkepsFinancing extends AppCompatActivity {
 
         webView = findViewById(R.id.webView);
         SharedPreferences config = getSharedPreferences("dataBinding", MODE_PRIVATE);
-        domain = "https://fnbo-dev.skeps.dev";
-        merchantID = "MRG10HN7";
+        domain = config.getString("domain", "");
+        merchantID = config.getString("merchantID", "");
 
         Intent intent = getIntent();
         amount = Integer.parseInt(intent.getStringExtra("amount"));

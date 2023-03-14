@@ -28,7 +28,6 @@ public class SkepsInit extends  LinearLayout{
         mContext = context;
     }
 
-
     public SkepsInit(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -60,6 +59,7 @@ public class SkepsInit extends  LinearLayout{
         void successHandler(String result);
         void failureHandler(String result);
     }
+
 
     public void initProcess(JSONObject config, SkepsCheckoutHandlerInterface callback) {
         i = new Intent(mContext, SkepsFinancing.class);
@@ -96,9 +96,11 @@ public class SkepsInit extends  LinearLayout{
         mContext.startActivity(i);
     }
 
+
     public static String getBanner(String amount) {
         return "5 interest-free payments of $"+calculateEMI(Integer.parseInt(amount))+" info with Slice by FNBO";
     }
+
 
     public static int calculateEMI(int amount) {
         int A = amount * 100;

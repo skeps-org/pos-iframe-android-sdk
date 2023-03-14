@@ -1,5 +1,7 @@
 package com.posiframe.posiframesdk;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +15,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences.Editor SKEPS_financing = getSharedPreferences("dataBinding", MODE_PRIVATE).edit();
+        SKEPS_financing.putString("domain", "https://pos.test.skeps.com");
+//        SKEPS_financing.putString("merchantID", "YKVABNVB"); //scheels
+        SKEPS_financing.putString("merchantID", "MRG10HN7"); //JFJ Dev
+        SKEPS_financing.apply();
+
         View view = this.findViewById(android.R.id.content).getRootView();
         EditText mEdit;
 
@@ -44,6 +53,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         SkepsInit SKEPSInitFlow = new SkepsInit(view.getContext());
-        SKEPSInitFlow.initProcess(config, handlers);
+//        SKEPSInitFlow.initProcess(config, handlers);
     }
 }
