@@ -1,6 +1,4 @@
 package com.posiframe.skepsfinancing;
-
-
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Intent;
@@ -15,19 +13,15 @@ import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
@@ -116,8 +110,8 @@ public class SkepsFinancing extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println("error ############"+error);
-                Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT)
-                        .show();
+                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT)
+                            .show();
                 // handle error
             }
         });
@@ -176,15 +170,18 @@ public class SkepsFinancing extends AppCompatActivity {
     }
 
     public void loadIframe() {
-
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(getInitiateURL()); // loading the hash url
         webView.addJavascriptInterface(new SkepsFinancing.JavaScriptInterface(), "JavaScriptInterface"); // binding callback method
-
         // on load hash url sending the postMessage event to iframe
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
+
+                if(url.contains("authorization_code_good")) {
+//                    View v = findViewById(view.getId()); // replace "my_view" with your view IDview.setVisibility(View.GONE);
+//                    view.setVisibility(v.INVISIBLE);
+                }
                 if (loadCount.equals("loading")) {
                     loadCount = "loaded";
                     super.onPageFinished(view, url);
@@ -211,6 +208,8 @@ public class SkepsFinancing extends AppCompatActivity {
                                         String contentDisposition, String mimetype,
                                         long contentLength) {
                 if (downloadClicked) {
+                    Toast.makeText(getApplicationContext(), "downloading..", Toast.LENGTH_SHORT)
+                            .show();
                     DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                     request.setMimeType(mimetype);
                     request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
@@ -228,7 +227,7 @@ public class SkepsFinancing extends AppCompatActivity {
 
         @JavascriptInterface
         public void onSuccess(String data) {
-            Toast.makeText(getApplicationContext(), "Order Completed!", Toast.LENGTH_SHORT)
+            Toast.makeText(getApplicationContext(), "Order Completed!", Toast.LENGTH_LONG)
                     .show();
             bundle.putString("data", data);
             finish();
@@ -236,9 +235,7 @@ public class SkepsFinancing extends AppCompatActivity {
         }
 
         @JavascriptInterface
-        public void onFailure(String data) {
-            Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT)
-                    .show();
+        public void onFailure(String data) throws JSONException {
             bundle.putString("data", data);
             finish();
             receiver.send(Activity.RESULT_CANCELED, bundle);
@@ -246,7 +243,7 @@ public class SkepsFinancing extends AppCompatActivity {
 
         @JavascriptInterface
         public void loaded(String data) {
-            System.out.println(" ################ loaded ################ "+ data);
+//            System.out.println(" ################ loaded ################ "+ data);
         }
 
         @JavascriptInterface
@@ -263,8 +260,4 @@ public class SkepsFinancing extends AppCompatActivity {
             downloadClicked = true;
         }
     }
-
-
-
-
 }

@@ -16,25 +16,16 @@
         tools:layout_editor_absoluteX="5dp"
         tools:layout_editor_absoluteY="181dp" />
 
-
-<!--    <Button-->
-<!--        android:id="@+id/button1"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="116dp"-->
-<!--        android:layout_marginBottom="328dp"-->
-<!--        android:text=""-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-
     <TextView
+        android:id="@+id/skeps_callback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.417"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.634" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

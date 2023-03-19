@@ -41,7 +41,8 @@ afterEvaluate {
 }
 
 dependencies {
-
+    implementation 'androidx.work:work-runtime:2.7.1'
+    implementation 'com.plaid.link:sdk-core:3.10.2'
     implementation 'com.mcxiaoke.volley:library:1.0.19'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
