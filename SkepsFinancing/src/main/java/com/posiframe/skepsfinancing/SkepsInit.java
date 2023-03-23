@@ -12,6 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +30,7 @@ public class SkepsInit extends  LinearLayout{
     TextView mainTextView = null;
     Context mContext = null;
     Intent i;
-
+    public String baseURL;
     public SkepsInit(Context context) {
         super(context);
         mContext = context;
@@ -40,6 +48,8 @@ public class SkepsInit extends  LinearLayout{
         layout = (LinearLayout) li.inflate(R.layout.skepsinit, this, true);
 
         mainTextView = (TextView) layout.findViewById(R.id.main_text);
+//        fetchBanner("");
+        mainTextView.setText(getBanner(opportunityAmount));
         mainTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +60,7 @@ public class SkepsInit extends  LinearLayout{
                 mContext.startActivity(i);
             }
         });
-        mainTextView.setText(getBanner(opportunityAmount));
+
         a.recycle();
     }
 
@@ -88,7 +98,6 @@ public class SkepsInit extends  LinearLayout{
                     String error = resultData.getString("data");
                     callback.failureHandler(error);
                 } else {
-
                 }
             }
         });
@@ -96,11 +105,9 @@ public class SkepsInit extends  LinearLayout{
         mContext.startActivity(i);
     }
 
-
     public static String getBanner(String amount) {
         return "5 interest-free payments of $"+calculateEMI(Integer.parseInt(amount))+" info with Slice by FNBO";
     }
-
 
     public static int calculateEMI(int amount) {
         int A = amount * 100;
@@ -108,5 +115,4 @@ public class SkepsInit extends  LinearLayout{
         Number C = A % 5;
         return  (B.intValue() + C.intValue()) / 100;
     }
-
 }

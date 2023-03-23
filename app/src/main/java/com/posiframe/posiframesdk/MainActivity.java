@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.posiframe.skepsfinancing.SkepsInit;
 
 import org.json.JSONException;
@@ -17,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences.Editor SKEPS_financing = getSharedPreferences("dataBinding", MODE_PRIVATE).edit();
-        SKEPS_financing.putString("domain", "https://pos.test.skeps.com");
-//        SKEPS_financing.putString("merchantID", "YKVABNVB"); //scheels
-        SKEPS_financing.putString("merchantID", "MRG10HN7"); //JFJ Dev
+        SKEPS_financing.putString("domain", "https://fnbo-dev.skeps.dev");
+        SKEPS_financing.putString("merchantID", "YKVABNVB"); //scheels
+//        SKEPS_financing.putString("merchantID", "YT3EE9IN"); //JFJ Dev
         SKEPS_financing.apply();
 
         View view = this.findViewById(android.R.id.content).getRootView();
@@ -43,16 +45,20 @@ public class MainActivity extends AppCompatActivity {
         SkepsInit.SkepsCheckoutHandlerInterface handlers = new SkepsInit.SkepsCheckoutHandlerInterface() {
             @Override
             public void successHandler(String result) {
-                // Do something on success
+                TextView t = findViewById(R.id.skeps_callback);
+                t.setText("Status: " + result);
             }
-
             @Override
             public void failureHandler(String result) {
-                // Do something on failure
+                TextView t = findViewById(R.id.skeps_callback);
+                t.setText("Status: " + result);
             }
         };
 
         SkepsInit SKEPSInitFlow = new SkepsInit(view.getContext());
-//        SKEPSInitFlow.initProcess(config, handlers);
+        String baseURL = "https://fnbo-dev.skeps.dev";
+//        SKEPSInitFlow.baseURL = baseURL;
+//        SKEPSInitFlow.fetchBanner(baseURL);
+        SKEPSInitFlow.initProcess(config, handlers);
     }
 }
