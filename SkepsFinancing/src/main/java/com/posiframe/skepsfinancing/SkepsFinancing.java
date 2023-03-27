@@ -36,7 +36,7 @@ public class SkepsFinancing extends AppCompatActivity {
     ResultReceiver receiver;
     String loadCount = "loading";
     Bundle bundle = new Bundle();
-    int amount;
+    float amount;
     boolean downloadClicked = false;
     public final static String BUNDLED_LISTENER = "listener";
 
@@ -52,7 +52,7 @@ public class SkepsFinancing extends AppCompatActivity {
         merchantID = config.getString("merchantID", "");
 
         Intent intent = getIntent();
-        amount = Integer.parseInt(intent.getStringExtra("amount"));
+        amount = Float.parseFloat(intent.getStringExtra("amount"));
         receiver = intent.getParcelableExtra(SkepsFinancing.BUNDLED_LISTENER);
         if(intent.getStringExtra("flowType").contains("checkout")) {
             try {
@@ -78,7 +78,7 @@ public class SkepsFinancing extends AppCompatActivity {
         return url;
     }
 
-    public void BNPLCheckoutFlow(int amount) throws JSONException {
+    public void BNPLCheckoutFlow(float amount) throws JSONException {
         RequestQueue requestQueue =  Volley.newRequestQueue(this.getApplicationContext());
 
         String checkoutAPI = domain + "/application/api/pos/v1/oauth/merchant/generate/checkout/hash?merchantId=" + merchantID;
@@ -118,7 +118,7 @@ public class SkepsFinancing extends AppCompatActivity {
         requestQueue.add(jsObjRequest);
     }
 
-    public void BNPLCheckEligibilityFlow(int amount) throws JSONException {
+    public void BNPLCheckEligibilityFlow(float amount) throws JSONException {
 
         RequestQueue requestQueue =  Volley.newRequestQueue(this.getApplicationContext());
 

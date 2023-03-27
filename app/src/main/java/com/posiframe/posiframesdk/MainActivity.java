@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 //            } else {
 //
 //            }
-            config.put("amount", "230");
+            config.put("amount", "230.87");
         } catch (JSONException e) {
             e.printStackTrace();
         }
