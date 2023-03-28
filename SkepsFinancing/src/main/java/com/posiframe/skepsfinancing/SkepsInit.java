@@ -90,7 +90,6 @@ public class SkepsInit extends  LinearLayout{
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 super.onReceiveResult(resultCode, resultData);
                 if (resultCode == Activity.RESULT_OK) {
-                    // success case
                     String val = resultData.getString("data");
                     callback.successHandler(val);
                 } else if (resultCode == Activity.RESULT_CANCELED){

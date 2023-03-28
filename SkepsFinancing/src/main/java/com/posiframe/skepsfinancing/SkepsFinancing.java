@@ -189,12 +189,12 @@ public class SkepsFinancing extends AppCompatActivity {
                     Uri uri = Uri.parse(url);
                     String config;
                     if(url.contains("checkout")) {
-                        config = "window.postMessage({event:'initialize',sourceType :'SKEPS_INTEGRATED_MERCHANT',config: {cartAmount: "+amount+",}}, '*')";
+                        config = "window.postMessage({event:'initialize',mode: 'inline-full-page', sourceType :'SKEPS_INTEGRATED_MERCHANT',config: {cartAmount: "+amount+",}}, '*')";
                     } else {
                         String accessToken = uri.getQueryParameter("access_token");
                         String orderID = uri.getQueryParameter("order_id");
                         String merchantId = uri.getQueryParameter("merchant_id");
-                        config = "window.postMessage({event:'check-eligibility',sourceType :'SKEPS_INTEGRATED_MERCHANT',config: {merchantId:'"+merchantId+"',opportunityId:'"+orderID+"',accessKey:'"+accessToken+"',orderAmount:"+amount+",}}, '*')";
+                        config = "window.postMessage({event:'check-eligibility',mode: 'inline-full-page', sourceType :'SKEPS_INTEGRATED_MERCHANT',config: {merchantId:'"+merchantId+"',opportunityId:'"+orderID+"',accessKey:'"+accessToken+"',orderAmount:"+amount+",}}, '*')";
                     }
                     // sending post message
                     webView.evaluateJavascript(config, null);
@@ -208,8 +208,8 @@ public class SkepsFinancing extends AppCompatActivity {
                                         String contentDisposition, String mimetype,
                                         long contentLength) {
                 if (downloadClicked) {
-                    Toast.makeText(getApplicationContext(), "downloading..", Toast.LENGTH_SHORT)
-                            .show();
+//                    Toast.makeText(getApplicationContext(), "downloading..", Toast.LENGTH_SHORT)
+//                            .show();
                     DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                     request.setMimeType(mimetype);
                     request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
