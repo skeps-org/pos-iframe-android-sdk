@@ -1,14 +1,10 @@
 package com.posiframe.posiframesdk;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-
 import com.posiframe.skepsfinancing.SkepsInit;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,28 +13,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         SharedPreferences.Editor SKEPS_financing = getSharedPreferences("dataBinding", MODE_PRIVATE).edit();
         SKEPS_financing.putString("domain", "https://pos.test.skeps.com");
 //        SKEPS_financing.putString("merchantID", "YKVABNVB"); //scheels
-        SKEPS_financing.putString("merchantID", "YT3EE9IN"); //JFJ Dev
+        SKEPS_financing.putString("merchantID", "YT3EE9IN"); //JFJ
+        String  hashURL = "https://pos.test.skeps.com/application/initiate/checkout?hash=ue7uS3DA9EDiqKWwMTXHe%2B8aqiXGYSR%2Fv%2FwuEzyc5HKEijQZIy%2FhOKPhvPuT1LF5%2FeJDVDaGfFyKCfKTYO6VlOAyUOvyaIPaGQCwLT3ZXojZegOOdakbnQW0O%2FWMcWndwph4zOb4ArP5clq%2FzUKIooTDQY08zSkeelM8sI2qRuQ%3D&_=1680159593671&order_amount=235";
+
         SKEPS_financing.apply();
 
         View view = this.findViewById(android.R.id.content).getRootView();
-        EditText mEdit;
-
-//        mEdit   = (EditText) binding.plainTextInput;
 
         JSONObject config = new JSONObject();
         try {
             config.put("flowType","checkout");
-
-//            if (mEdit.getText().toString().length() > 1) {
-//                config.put("amount", (mEdit.getText().toString()));
-//            } else {
-//
-//            }
-            config.put("amount", "230.87");
+            config.put("amount", "231");
+            config.put("hashURL", hashURL);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -56,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         SkepsInit SKEPSInitFlow = new SkepsInit(view.getContext());
-        String baseURL = "https://fnbo-dev.skeps.dev";
-//        SKEPSInitFlow.baseURL = baseURL;
-//        SKEPSInitFlow.fetchBanner(baseURL);
         SKEPSInitFlow.initProcess(config, handlers);
     }
 }
