@@ -12,14 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,12 +67,15 @@ public class SkepsInit extends  LinearLayout{
         i = new Intent(mContext, SkepsFinancing.class);
         String flowType;
         String amount;
+        String hashURL;
         try {
             flowType = ((JSONObject) config).getString("flowType");
             amount = ((JSONObject) config).getString("amount");
+            hashURL = ((JSONObject) config).getString("hashURL");
 
             i.putExtra("flowType",flowType);
             i.putExtra("amount", amount);
+            i.putExtra("hashURL", hashURL);
         } catch (JSONException e) {
             e.printStackTrace();
         }
