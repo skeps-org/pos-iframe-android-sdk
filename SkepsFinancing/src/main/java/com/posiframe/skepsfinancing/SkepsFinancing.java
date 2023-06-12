@@ -31,7 +31,7 @@ public class SkepsFinancing extends AppCompatActivity {
 
     Intent i;
     WebView webView;
-    String domain, merchantID, url;
+    String domain, merchantID, url, hashURL;
     String currency = "USD";
     ResultReceiver receiver;
     String loadCount = "loading";
@@ -52,20 +52,30 @@ public class SkepsFinancing extends AppCompatActivity {
         merchantID = config.getString("merchantID", "");
 
         Intent intent = getIntent();
+        hashURL = intent.getStringExtra("hashURL");
         amount = Float.parseFloat(intent.getStringExtra("amount"));
+
         receiver = intent.getParcelableExtra(SkepsFinancing.BUNDLED_LISTENER);
-        if(intent.getStringExtra("flowType").contains("checkout")) {
-            try {
-                BNPLCheckoutFlow(amount);
-            } catch (JSONException e) {
-                e.printStackTrace();
+
+        if (hashURL != null && hashURL.contains("checkout?hash")) {
+            setInitiateURL(hashURL);
+            Uri params = Uri.parse(hashURL);
+            amount = Integer.parseInt(params.getQueryParameter("order_amount"));
+            loadIframe();
+        } else {
+            if(intent.getStringExtra("flowType").contains("checkout")) {
+                try {
+                    BNPLCheckoutFlow(amount);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        }
-        else {
-            try {
-                BNPLCheckEligibilityFlow(amount);
-            } catch (JSONException e) {
-                e.printStackTrace();
+            else {
+                try {
+                    BNPLCheckEligibilityFlow(amount);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
