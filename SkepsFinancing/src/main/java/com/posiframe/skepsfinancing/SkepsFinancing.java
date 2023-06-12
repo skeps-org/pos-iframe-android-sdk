@@ -36,7 +36,8 @@ public class SkepsFinancing extends AppCompatActivity {
     ResultReceiver receiver;
     String loadCount = "loading";
     Bundle bundle = new Bundle();
-    float amount;
+    String amount = "";
+    String flowType = "";
     boolean downloadClicked = false;
     public final static String BUNDLED_LISTENER = "listener";
 
@@ -50,20 +51,20 @@ public class SkepsFinancing extends AppCompatActivity {
         SharedPreferences config = getSharedPreferences("dataBinding", MODE_PRIVATE);
         domain = config.getString("domain", "");
         merchantID = config.getString("merchantID", "");
+        hashURL = domain;
 
         Intent intent = getIntent();
-        hashURL = intent.getStringExtra("hashURL");
-        amount = Float.parseFloat(intent.getStringExtra("amount"));
-
+        amount = intent.getStringExtra("amount");
+        flowType = intent.getStringExtra("flowType");
         receiver = intent.getParcelableExtra(SkepsFinancing.BUNDLED_LISTENER);
 
         if (hashURL != null && hashURL.contains("checkout?hash")) {
             setInitiateURL(hashURL);
             Uri params = Uri.parse(hashURL);
-            amount = Integer.parseInt(params.getQueryParameter("order_amount"));
+            amount = params.getQueryParameter("order_amount");
             loadIframe();
         } else {
-            if(intent.getStringExtra("flowType").contains("checkout")) {
+            if(flowType.contains("checkout")) {
                 try {
                     BNPLCheckoutFlow(amount);
                 } catch (JSONException e) {
@@ -88,7 +89,7 @@ public class SkepsFinancing extends AppCompatActivity {
         return url;
     }
 
-    public void BNPLCheckoutFlow(float amount) throws JSONException {
+    public void BNPLCheckoutFlow(String amount) throws JSONException {
         RequestQueue requestQueue =  Volley.newRequestQueue(this.getApplicationContext());
 
         String checkoutAPI = domain + "/application/api/pos/v1/oauth/merchant/generate/checkout/hash?merchantId=" + merchantID;
@@ -109,7 +110,7 @@ public class SkepsFinancing extends AppCompatActivity {
                             Object obj = response.getJSONObject("merchantInfo");
                             checkoutHash = ((JSONObject) obj).getString("checkoutLandingUrlPath");
                             long millis = new Date().getTime();
-                            String initiateAPI = domain + checkoutHash + "&_="+millis+"&order_amount=" + amount;
+                            String initiateAPI = domain + checkoutHash + "&_="+millis+"&order_amount=" + Float.parseFloat(amount);
                             setInitiateURL(initiateAPI);
                             loadIframe();
                         } catch (JSONException e) {
@@ -128,7 +129,7 @@ public class SkepsFinancing extends AppCompatActivity {
         requestQueue.add(jsObjRequest);
     }
 
-    public void BNPLCheckEligibilityFlow(float amount) throws JSONException {
+    public void BNPLCheckEligibilityFlow(String amount) throws JSONException {
 
         RequestQueue requestQueue =  Volley.newRequestQueue(this.getApplicationContext());
 
@@ -137,7 +138,7 @@ public class SkepsFinancing extends AppCompatActivity {
         JSONObject body = new JSONObject();
         try {
             body.put("currency", currency);
-            body.put("amount", amount);
+            body.put("amount", Float.parseFloat(amount));
         } catch (JSONException e) {
             e.printStackTrace();
         }

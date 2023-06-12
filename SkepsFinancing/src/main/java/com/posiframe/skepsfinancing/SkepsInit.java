@@ -57,28 +57,18 @@ public class SkepsInit extends  LinearLayout{
     }
 
 
-    public interface SkepsCheckoutHandlerInterface {
-        void successHandler(String result);
-        void failureHandler(String result);
-    }
-
-
     public void initProcess(JSONObject config, SkepsCheckoutHandlerInterface callback) {
-        i = new Intent(mContext, SkepsFinancing.class);
-        String flowType;
-        String amount;
-        String hashURL;
-        try {
-            flowType = ((JSONObject) config).getString("flowType");
-            amount = ((JSONObject) config).getString("amount");
-            hashURL = ((JSONObject) config).getString("hashURL");
 
-            i.putExtra("flowType",flowType);
-            i.putExtra("amount", amount);
-            i.putExtra("hashURL", hashURL);
+        i = new Intent(mContext, SkepsFinancing.class);
+
+        try {
+            i.putExtra("flowType",((JSONObject) config).getString("flowType"));
+            i.putExtra("amount", ((JSONObject) config).getString("amount"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
 
         i.putExtra(SkepsFinancing.BUNDLED_LISTENER, new ResultReceiver(new Handler()) {
             @Override
@@ -97,6 +87,11 @@ public class SkepsInit extends  LinearLayout{
         });
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(i);
+    }
+
+    public interface SkepsCheckoutHandlerInterface {
+        void successHandler(String result);
+        void failureHandler(String result);
     }
 
     public static String getBanner(String amount) {
