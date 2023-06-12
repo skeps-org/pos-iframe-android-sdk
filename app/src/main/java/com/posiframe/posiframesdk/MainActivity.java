@@ -19,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences.Editor SKEPS_financing = getSharedPreferences("dataBinding", MODE_PRIVATE).edit();
-        SKEPS_financing.putString("domain", "https://pos.test.skeps.com");
-//        SKEPS_financing.putString("merchantID", "YKVABNVB"); //scheels
-        SKEPS_financing.putString("merchantID", "YT3EE9IN"); //JFJ Dev
+        SKEPS_financing.putString("domain", "https://fnbo-dev.skeps.dev");
+        SKEPS_financing.putString("merchantID", "LUXMFDFL"); //scheels
+//        SKEPS_financing.putString("merchantID", "YT3EE9IN"); //JFJ Dev
         SKEPS_financing.apply();
 
         View view = this.findViewById(android.R.id.content).getRootView();
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         };
 
         SkepsInit SKEPSInitFlow = new SkepsInit(view.getContext());
-        String baseURL = "https://fnbo-dev.skeps.dev";
+//        String baseURL = "https://fnbo-dev.skeps.dev";
 //        SKEPSInitFlow.baseURL = baseURL;
 //        SKEPSInitFlow.fetchBanner(baseURL);
         SKEPSInitFlow.initProcess(config, handlers);

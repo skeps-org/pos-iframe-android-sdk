@@ -177,11 +177,6 @@ public class SkepsFinancing extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-
-                if(url.contains("authorization_code_good")) {
-//                    View v = findViewById(view.getId()); // replace "my_view" with your view IDview.setVisibility(View.GONE);
-//                    view.setVisibility(v.INVISIBLE);
-                }
                 if (loadCount.equals("loading")) {
                     loadCount = "loaded";
                     super.onPageFinished(view, url);
@@ -208,8 +203,6 @@ public class SkepsFinancing extends AppCompatActivity {
                                         String contentDisposition, String mimetype,
                                         long contentLength) {
                 if (downloadClicked) {
-//                    Toast.makeText(getApplicationContext(), "downloading..", Toast.LENGTH_SHORT)
-//                            .show();
                     DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                     request.setMimeType(mimetype);
                     request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
@@ -253,6 +246,18 @@ public class SkepsFinancing extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT)
                         .show();
             }
+        }
+
+        @JavascriptInterface
+        public void plaidONSuccess(String data) {
+            Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        @JavascriptInterface
+        public void plaidONExit(String data) {
+            Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT)
+                    .show();
         }
 
         @JavascriptInterface
